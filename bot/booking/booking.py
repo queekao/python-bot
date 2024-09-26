@@ -138,7 +138,7 @@ class Booking(webdriver.Firefox):
         # Here is initiating the new instance here
         filtration = BookingFiltration(driver=self)
         filtration.apply_star_rating(4, 5)
-        filtration.sort_rate_lowest_first()
+        # filtration.sort_rate_lowest_first()
 
     def report_results(self):
         hotel_boxes = self.find_element(By.CLASS_NAME, 'd4924c9e74')

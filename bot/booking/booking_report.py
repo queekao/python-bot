@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 
 class BookingReport:
@@ -33,18 +34,19 @@ class BookingReport:
                     lambda x: x.find_element(
                         By.CSS_SELECTOR, 'span[data-testid="price-and-discounted-price"]')
                 )
+                # still working on it for find the score text
                 hotel_price = hotel_price_element.get_attribute(
                     'innerHTML').strip()
                 hotel_score_element = WebDriverWait(deal_box, 10).until(
                     lambda x: x.find_element(
-                        By.XPATH, '//div[contains(@aria-label, "分數")]')
+                        By.CSS_SELECTOR, 'div[data-testid= "review-score"]')
                 )
                 hotel_score = hotel_score_element.get_attribute(
                     'innerHTML').strip()
                 collection.append([
                     hotel_name, hotel_price, hotel_score
                 ])
-            except StaleElementReferenceException as stale:
+            except (StaleElementReferenceException, TimeoutException) as stale:
                 print(f"An error occurred: {stale}")
 
         return collection
